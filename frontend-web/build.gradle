@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+group 'com.example'
+version '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.9.2'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    compileOnly('jakarta.platform:jakarta.jakartaee-web-api:10.0.0')
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+    implementation 'org.apache.commons:commons-lang3:3.13.0'
+    implementation 'jakarta.mvc:jakarta.mvc-api:2.1.0'
+    implementation 'org.eclipse.krazo:krazo-jersey:3.0.1'
+    implementation 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1'
+    // For Jakarta it is important to add the classifier jakarta
+    implementation 'org.primefaces:primefaces:13.0.1:jakarta'
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+war {
+    archiveFileName.set("${project.name}.war")
+}
+
+ext {
+    deploymentDir = "$System.env.GLASSFISH_HOME/glassfish/domains/domain2/autodeploy"
+    String val = System.getenv("DEPLOYMENT_DIR")
+    if (val != null) {
+        deploymentDir = val
+    }
+}
+
+task copyArchive(type: Copy) {
+    dependsOn(war)
+    def archiveFile = war.archiveFileName.get()
+    Provider<Directory> output = layout.buildDirectory.dir("libs")
+    from(output.get()) {
+        include "**/${archiveFile}"
+    }
+    into "${deploymentDir}"
+    doNotTrackState("Installation directory contains unrelated files")
+    println("Copyed file ${output.get()}/${archiveFile}")
+}

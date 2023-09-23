@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="jakarta.tags.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:ui="jakarta.faces.facelets">
+<f:view locale="en">
+   <h:head>
+      <title>Title</title>
+   </h:head>
+   <h:body>
+     <!-- content -->
+      <h3>Hello</h3>
+       <c:if test="#{beispielBean.card.size() > 0}">
+
+       </c:if>
+      <h:form>
+          <h:dataTable value="#{beispielBean.names}" var="name">
+              <h:column>
+                  <h:outputText value="#{name.firstName}"/>
+              </h:column>
+              <h:column>
+                  <h:outputText value="#{name.lastName}"/>
+              </h:column>
+              <h:column>
+                  <h:commandLink action="#{beispielBean.addToCard(name)}">
+                      <f:ajax render="response cardForm:cardList"/>
+                  </h:commandLink>
+              </h:column>
+          </h:dataTable>
+          <h:outputLabel for="name" value="Name: "/>
+          <h:inputText id="name" value="#{beispielBean.name}"/>
+          <h:commandButton value="Submit" action="#{beispielBean.submit()}">
+              <f:ajax execute="@form" render="output"/>
+          </h:commandButton>
+      </h:form>
+       <h:form id="cardForm">
+           <strong>Card</strong>
+           <h:dataTable id="cardList" value="#{beispielBean.card}" var="item">
+               <h:column>
+                   <h:outputText value="#{item.lastName}"/>
+               </h:column>
+           </h:dataTable>
+       </h:form>
+       <p>Output
+            <h:outputText id="output" value="#{beispielBean.output}"/>
+       </p>
+       <p>
+           <h:outputText id="response" value="Thank you for ordering" rendered="#{beispielBean.card.size() > 0}"/>
+       </p>
+   </h:body>
+</f:view>
+</html>

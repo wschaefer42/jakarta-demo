@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+<f:view>
+   <h:head>
+      <title>Nag Page one</title>
+   </h:head>
+   <h:body>
+      <h2>Nav Page One</h2>
+      <h:form>
+         <h:commandButton value="Goto Page Two" action="#{navBean.pageTwo()}"/><br/>
+         <h:commandButton value="Next Page" action="#{navBean.nextPage()}"/>
+      </h:form>
+   </h:body>
+</f:view>
+</html>

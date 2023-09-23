@@ -1,0 +1,4 @@
+# Project exclude paths
+/frontend-web/.gradle/
+/frontend-web/build/
+/frontend-web/build/classes/java/main/

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:c="jakarta.tags.core"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui"
+>
+<f:view>
+    <h:head>
+        <title>Authors II</title>
+    </h:head>
+    <h:body>
+        <h2>Authors PrimeFaces Version 0.1.17</h2>
+        <h:form id="inputForm">
+            <p:dataTable id="table" var="author" value="#{authorBean.authors}">
+                <p:column width="2rem">
+                    <h:panelGroup id="selectedId" rendered="#{authorBean.isSelected(author.id)}">
+                        <i class="pi pi-check" style="font-size: 1rem" />
+                    </h:panelGroup>
+                </p:column>
+                <p:column>
+                    <p:commandButton
+                            value="#{author.id}"
+                            action="#{authorBean.displayAuthor(author.id)}"
+                            update="inputForm detailForm:detailGrid"/>
+                    <p:spacer width="10"/>
+                    <p:commandLink
+                            value="#{author.id}"
+                            action="#{authorBean.displayAuthor(author.id)}">
+                        <!-- Does not work prober
+                        Does work, but let's use the update parameter
+                        <p:ajax update="inputForm detailGrid"/>
+                        -->
+                        <f:ajax execute="@form" render="inputForm detailForm:detailGrid"/>
+                    </p:commandLink>
+                </p:column>
+                <p:column field="firstName" headerText="First Name"/>
+                <p:column field="lastName" headerText="Last Name"/>
+            </p:dataTable>
+            <h:panelGroup id="output" rendered="#{not empty authorBean.current}">
+                <h:outputText value="#{authorBean.current}"/><br/>
+            </h:panelGroup>
+            <p:commandButton value="Add" action="#{authorBean.reset()}" update="detailForm:detailGrid"/>
+        </h:form>
+        <!-- Make sure to choose h:form istead of the <form> -->
+        <h:form id="detailForm">
+            <p:panelGrid id="detailGrid" columns="2" layout="grid" columnClasses="ui-grid-col-4,ui-grid-col-4">
+                <f:facet name="header">
+                    <h3>#{not empty authorBean.current ? 'Edit' : 'Add'} Author</h3>
+                </f:facet>
+                <p:outputLabel for="firstName" value="First Name: "/>
+                <p:inputText id="firstName" value="#{authorBean.firstName}"/>
+                <p:outputLabel for="lastName" value="Last Name: "/>
+                <p:inputText id="lastName" value="#{authorBean.lastName}"/>
+                <p:commandButton value="Save" action="#{authorBean.saveAuthor()}" update="inputForm"/>
+            </p:panelGrid>
+        </h:form>
+    </h:body>
+</f:view>
+</html>
