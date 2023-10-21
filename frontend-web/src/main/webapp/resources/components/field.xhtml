@@ -1,0 +1,30 @@
+<ui:component
+        xmlns:faces="jakarta.faces"
+        xmlns:c="jakarta.tags.core"
+        xmlns:t="jakarta.faces.composite/components"
+        xmlns:h="jakarta.faces.html"
+        xmlns:ui="jakarta.faces.facelets"
+        xmlns:cc="jakarta.faces.composite">
+   <cc:interface componentType="messageComposite">
+      <cc:attribute name="label" type="String" default="Label" />
+      <cc:attribute name="type" type="String" default="text" />
+      <cc:attribute name="rendered" type="boolean" default="true" />
+   </cc:interface>
+   <cc:implementation>
+      <div class="field" faces:rendered="#{cc.rendered ne false}">
+         <h:outputLabel id="#{cc.clientId}_l" for="#{cc.id}" value="#{cc.attrs.label}" />
+         <c:choose>
+            <c:when test="#{cc.type eq 'password'}">
+               <h:inputSecret id="#{cc.clientId}" label="#{label}" value="#{value}" />
+            </c:when>
+            <c:when test="#{type eq 'textarea'}">
+               <h:inputTextarea id="#{cc.clientId}" label="#{label}" value="#{value}" />
+            </c:when>
+            <c:otherwise>
+               <h:inputText id="#{cc.clientId}" label="#{label}" value="#{value}" type="#{type}"/>
+            </c:otherwise>
+         </c:choose>
+         <h:messages id="#{cc.clientId}_m" for="#{cc.clientId}" errorStyle="color: red" infoStyle="color: green" />
+      </div>
+   </cc:implementation>
+</ui:component>
