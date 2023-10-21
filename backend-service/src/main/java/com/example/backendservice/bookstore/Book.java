@@ -9,20 +9,18 @@ import java.time.Year;
 import java.util.Set;
 
 @Entity
-@Table(name="books")
+@Table(name = "books")
 @Getter @Setter @NoArgsConstructor
 public class Book {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank @Column(nullable = false)
     private String title;
-    @Column(columnDefinition = "year")
     private Short published = null;
-
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST) @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     private Set<Author> authors;
 
     public Book(String title, Year published, Set<Author> authors, Category category) {

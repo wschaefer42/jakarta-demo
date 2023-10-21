@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "categories")
@@ -18,8 +19,8 @@ public class Category {
     private String name;
     private String description = null;
 
-    @OneToMany
-    private List<Book> books;
+    @OneToMany(mappedBy = "category")
+    private Set<Book> books;
 
     public Category(String name) {
         this.name = name;

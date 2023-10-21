@@ -1,5 +1,6 @@
 @startuml
 'https://plantuml.com/sequence-diagram
+left to right direction
 entity Author {
     *id: Integer <<PK>>
     ---
@@ -22,11 +23,9 @@ entity Category {
     *name: String
     description: String
 }
-entity BookAuthor {
-    book_id: Integer <<PK,FK>>
-    author_id: Integer <<PK. FK>>
-}
-Author ||-o{ BookAuthor
-BookAuthor }|-|| Book
-Book }o-|| Category
+Author }|--o{ Book
+note top on link #orange
+Many-to-Many
+end note
+Book }o--|| Category
 @enduml

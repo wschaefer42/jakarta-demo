@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module version="4">
+  <component name="AdditionalModuleElements">
+    <content url="file://$MODULE_DIR$/../../backend-service/src/generated/java">
+      <sourceFolder url="file://$MODULE_DIR$/../../backend-service/src/generated/java" isTestSource="false" generated="true" />
+    </content>
+  </component>
   <component name="FacetManager">
     <facet type="jpa" name="JPA">
       <configuration>
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="EclipseLink" />
         <datasource-mapping>
-          <factory-entry name="default" value="0be95684-f0de-46f3-8b5c-074be3e69c51" />
+          <factory-entry name="bookstore" value="8cb08733-6f17-4fdc-99fa-0ff156616fd1" />
+          <factory-entry name="default" value="8cb08733-6f17-4fdc-99fa-0ff156616fd1" />
         </datasource-mapping>
         <naming-strategy-map />
         <deploymentDescriptor name="persistence.xml" url="file://$MODULE_DIR$/../../backend-service/src/main/resources/META-INF/persistence.xml" />

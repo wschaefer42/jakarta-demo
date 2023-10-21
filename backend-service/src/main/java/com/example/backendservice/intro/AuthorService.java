@@ -7,6 +7,8 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 @ApplicationScoped
@@ -28,11 +30,23 @@ public class AuthorService {
         }
     }
 
+    public List<Author> find(String firstname, String lastname) {
+        return em.createQuery("select a from Author a where a.firstname = :firstname and a.lastname = :lastname", Author.class)
+                .setParameter("firstname", firstname)
+                .setParameter("lastname", lastname)
+                .getResultList();
+    }
+
     public List<Author> search(AuthorSearchRequest searchRequest) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Author> query = cb.createQuery(Author.class);
         Root<Author> root = query.from(Author.class);
-        query.select(root).where(cb.like(root.get(Author_.firstname), searchRequest.firstName()));
+        if (StringUtils.isNotBlank(searchRequest.firstName())) {
+            query.select(root).where(cb.like(root.get(Author_.firstname), searchRequest.firstName()));
+        }
+        if (StringUtils.isNotBlank(searchRequest.lastName())) {
+
+        }
         return em.createQuery(query).getResultList();
     }
 }

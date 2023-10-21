@@ -18,6 +18,8 @@ public class Author {
     private String lastname;
     @Column(columnDefinition = "text")
     private String bio = null;
+    @Column(columnDefinition = "integer default 0")
+    private Integer age = 0;
 
     public Author(String firstname, String lastname) {
         this.firstname = firstname;
