@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+entity Author {
+    *id: Integer <<PK>>
+    ---
+    *firstname: String
+    *lastname: String
+    bio: Text
+}
+entity Book {
+    *id: Integer <<PK>>
+    ---
+    *title: String
+    *published: Year
+    *price: Double
+    image: Blob
+    category_id: id <<FK>>
+}
+entity Category {
+    *id: Integer
+    ---
+    *name: String
+    description: String
+}
+entity BookAuthor {
+    book_id: Integer <<PK,FK>>
+    author_id: Integer <<PK. FK>>
+}
+Author ||-o{ BookAuthor
+BookAuthor }|-|| Book
+Book }o-|| Category
+@enduml

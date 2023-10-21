@@ -1,4 +1,4 @@
-package com.example.backendservice.author;
+package com.example.backendservice.intro;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
@@ -11,7 +11,7 @@ import java.util.List;
 
 @ApplicationScoped
 public class AuthorService {
-    @PersistenceContext
+    @PersistenceContext(unitName = "default")
     private EntityManager em;
 
     public List<Author> findAll() {
